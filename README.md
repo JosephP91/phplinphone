@@ -117,8 +117,9 @@ while (!$call->isEnded() and !$call->hasError() and !$call->isReleased() and !$c
 
         // Don't forget to call this method!! It must be called periodically to allow linphone core to do background work!
         $core->iterate();
-    echo "User ".$call->getUser()." ended the call!\n";
-    $call->hangup();
 }
+echo "User ".$call->getUser()." ended the call!\n";
+$call->hangup();
+exit;
 ```
 

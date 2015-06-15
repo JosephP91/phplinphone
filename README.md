@@ -7,6 +7,8 @@ If you want to know a bit more about linphone and liblinphone, you can visit lin
 Requirements
 ------------
 
+First of all, phpcpp and phplinphone required C++11, so upgrade your compiler if you are using older versions.
+
 phplinphone, of course, need liblinphone to be installed, so you should install the latest version of liblinphone (at the time I'm writing, it's the 3.8.2), downlodable from here: http://mirror.lihnidos.org/GNU/savannah/linphone/3.8.x/sources/
 
 To install liblinphone, you can follow this guide http://sagar.se/linphone-3.7.0-wheezy.html . It works for liblinphone 3.7.0, but you can easly modify it for 3.8.2 version.

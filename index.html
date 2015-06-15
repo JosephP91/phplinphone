@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Phplinphone by JosephP91</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Phplinphone</h1>
+        <h2>C++ linphone library implementation, callable from PHP</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/JosephP91/phplinphone/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/JosephP91/phplinphone/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/JosephP91/phplinphone" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="phplinphone" class="anchor" href="#phplinphone" aria-hidden="true"><span class="octicon octicon-link"></span></a>phplinphone</h1>
+
+<p>phplinphone is a C++ liblinphone library implementation, callable from PHP. Liblinphone is a high level library integrating all the SIP video calls feature into a single easy to use API. </p>
+
+<p>If you want to know a bit more about linphone and liblinphone, you can visit linphone website: <a href="http://www.linphone.org/">http://www.linphone.org/</a></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>First of all, phpcpp and phplinphone required C++11, so upgrade your compiler if you are using older versions.</p>
+
+<p>phplinphone, of course, need liblinphone to be installed, so you should install the latest version of liblinphone (at the time I'm writing, it's the 3.8.2), downloadable from here: <a href="http://mirror.lihnidos.org/GNU/savannah/linphone/3.8.x/sources/">http://mirror.lihnidos.org/GNU/savannah/linphone/3.8.x/sources/</a></p>
+
+<p>To install liblinphone, you can follow this guide <a href="http://sagar.se/linphone-3.7.0-wheezy.html">http://sagar.se/linphone-3.7.0-wheezy.html</a> . It works for liblinphone 3.7.0, but you can easly modify it for 3.8.2 version.</p>
+
+<p>After you have installed liblinphone, you have to install phpcpp. phpcpp is a C++ library used to write PHP extension using C++ as main language. You can easly install it following phpcpp's website guide: <a href="http://www.php-cpp.com/documentation/install">http://www.php-cpp.com/documentation/install</a></p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Once you have installed the required libraries and downloaded phplinphone sources, you can install phplinphone library simply typing:</p>
+
+<div class="highlight highlight-bash"><pre>make <span class="pl-k">&amp;&amp;</span> sudo make install <span class="pl-k">&amp;&amp;</span> sudo php5enmod phplinphone</pre></div>
+
+<p>If everything works without errors, you can begin to use phplinphone classes from your PHP code.</p>
+
+<h2>
+<a id="simple-usage" class="anchor" href="#simple-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple Usage</h2>
+
+<p>Linphone can log its actions, so let's create a simple log from our PHP application:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$log</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneLog</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$log</span><span class="pl-k">-&gt;</span>set(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/log<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>Linphone can also configure itself starting from a factory configuration path. If you know what it is, how it is builded, and if you have one, you can specify it in this way:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$factoryConfig</span><span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneFactoryConfig</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$factoryConfig</span><span class="pl-k">-&gt;</span>set(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/factory/config<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>If you do not have a configuration file, don't panic. You can specifiy a file where liblinphone will write your settings.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$config</span><span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneConfig</span>();</span>
+<span class="pl-s1"><span class="pl-smi">$config</span><span class="pl-k">-&gt;</span>set(<span class="pl-s"><span class="pl-pds">'</span>/path/to/my/future/config<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<p>Now we need to instantiate the main linphone object, which is the core object. Nothing easier than:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$core</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneCore</span>();</span></pre></div>
+
+<p>If you have created configuration files (as I showed in the previous code snippet) you can pass them to the core object, allowing it to use them.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// If you have both of them</span></span>
+<span class="pl-s1"><span class="pl-smi">$core</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneCore</span>(<span class="pl-smi">$factoryConfig</span>,<span class="pl-smi">$config</span>);</span>
+<span class="pl-s1"><span class="pl-c">// If you have only the factory config</span></span>
+<span class="pl-s1"><span class="pl-smi">$core</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneCore</span>(<span class="pl-smi">$factoryConfig</span>);</span>
+<span class="pl-s1"><span class="pl-c">// If you have only the config</span></span>
+<span class="pl-s1"><span class="pl-smi">$core</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneCore</span>(<span class="pl-c1">NULL</span>,<span class="pl-smi">$config</span>);</span></pre></div>
+
+<p>Now we have the logs and core object. What now? We must provide our SIP account authentication credentials. I have created a SIP account on linphone website, so you can do like me and get your account for free: <a href="https://www.linphone.org/free-sip-service.html">https://www.linphone.org/free-sip-service.html</a>
+Once you have registered your account, open back your beautiful terminal and keep writing:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// We must provide our core object.</span></span>
+<span class="pl-s1"><span class="pl-smi">$auth</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneAuth</span>(<span class="pl-smi">$core</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$auth</span><span class="pl-k">-&gt;</span>setUsername(<span class="pl-s"><span class="pl-pds">'</span>sip:myusername@sip.linphone.org<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$auth</span><span class="pl-k">-&gt;</span>setPassword(<span class="pl-s"><span class="pl-pds">'</span>myverycomplexpassword<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$auth</span><span class="pl-k">-&gt;</span>build();</span></pre></div>
+
+<p>Linphone authenticate you throught proxies, so let's create one and authenticate on it with:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// We must provide core object and authentication object.</span></span>
+<span class="pl-s1"><span class="pl-smi">$proxy</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneProxy</span>(<span class="pl-smi">$core</span>,<span class="pl-smi">$auth</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>configure();</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registration in progres...<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>authenticate();</span>
+<span class="pl-s1"><span class="pl-k">if</span> (<span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>hasError()) {</span>
+<span class="pl-s1">  <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>failed with reason: <span class="pl-pds">"</span></span><span class="pl-k">.</span><span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>getError()<span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">  <span class="pl-k">exit</span>;</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>done.<span class="pl-cce">\n</span>Now disabling and clearing the proxy config... <span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>disable();</span>
+<span class="pl-s1"><span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>clear();</span>
+<span class="pl-s1"><span class="pl-k">if</span> (<span class="pl-smi">$proxy</span><span class="pl-k">-&gt;</span>isClear()) {</span>
+<span class="pl-s1">  <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>cleared.<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">} <span class="pl-k">else</span> {</span>
+<span class="pl-s1">  <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>could not be cleared.<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Now we can begin to call our SIP friends!</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Our buddie</span></span>
+<span class="pl-s1"><span class="pl-smi">$userToCall</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>sip:myfriend@sip.linphone.org<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-c">// Let's create a call object.</span></span>
+<span class="pl-s1"><span class="pl-smi">$call</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">PhpLinphoneCall</span>(<span class="pl-smi">$core</span>);</span>
+<span class="pl-s1"><span class="pl-c">/* We can also set a ring timeout, but it's not mandatory.*/</span></span>
+<span class="pl-s1"><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>setRingTimeout(<span class="pl-c1">10</span>);</span>
+<span class="pl-s1"><span class="pl-c">/* And you can even specify a call timeout. The difference between call timeout and ring timeout is that a ring</span></span>
+<span class="pl-s1"><span class="pl-c">timeout is the number of seconds from when you begin to call until the user picks up the call. The call timeout,</span></span>
+<span class="pl-s1"><span class="pl-c">instead, is the time from when the user picks up until he do something like press a key. Use the call timeout only if you want that the user press a number or something like that. */</span></span>
+<span class="pl-s1"><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>setCallTimeout(<span class="pl-c1">10</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>invite(<span class="pl-smi">$userToCall</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>start();</span>
+<span class="pl-s1"><span class="pl-k">while</span> (<span class="pl-k">!</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>isEnded() <span class="pl-k">and</span> <span class="pl-k">!</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>hasError() <span class="pl-k">and</span> <span class="pl-k">!</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>isReleased() <span class="pl-k">and</span> <span class="pl-k">!</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>isRingExpired() <span class="pl-k">and</span> <span class="pl-k">!</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>isCallExpired()) {</span>
+<span class="pl-s1">      <span class="pl-c">// Don't forget to call this method!! It must be called periodically to allow linphone core to do background work!</span></span>
+<span class="pl-s1">      <span class="pl-smi">$core</span><span class="pl-k">-&gt;</span>iterate();</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>User <span class="pl-pds">"</span></span><span class="pl-k">.</span><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>getUser()<span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">"</span> ended the call!<span class="pl-cce">\n</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$call</span><span class="pl-k">-&gt;</span>hangup();</span>
+<span class="pl-s1"><span class="pl-k">exit</span>;</span></pre></div>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
